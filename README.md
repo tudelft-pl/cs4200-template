@@ -5,12 +5,12 @@ This repository contains a template which allows students to implement
 labs for the CS4200 using a text editor or IDE of their own choice. Be
 aware that this template is provided by the course staff on a best
 effort basis and that no official support will be given. It is
-therefore recommended that assignments are done on Brightspace
+therefore recommended that assignments are done on WebLab
 instead.
 
 > **Warning**
 >  Please do not forget to hand-in **all** assignments using
-> Brightspace, otherwise they *cannot* and *will not* be graded.
+> WebLab, otherwise they *cannot* and *will not* be graded.
 
 Dependencies
 ------
