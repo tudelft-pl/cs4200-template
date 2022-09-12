@@ -198,7 +198,7 @@ object Lvar {
     extends Lint.Interpretable {
     override def interpExpr(e: Expr, nv: List[(String,InterpreterValue)], inputs: ListBuffer[Long], outputs: ListBuffer[Long]): InterpreterValue = e match {
       case Var(x) =>
-        nv.find({ case (y, _) => x == y }).get._2
+        nv.find({ case (y, _) => x == y }).getOrElse(throw new RuntimeException("The interpreter to read variable " + x + " that had no value."))._2
       case Let(x, e, body) =>
         interpExpr(body, (x, interpExpr(e, nv, inputs, outputs)) :: nv, inputs, outputs)
       case Prim(Print(), List(e)) =>

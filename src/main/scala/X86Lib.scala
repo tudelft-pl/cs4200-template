@@ -132,16 +132,15 @@ object X86Interpreter {
                          val strict: Boolean) {
 
 
-
     def read(arg: Arg): Long = arg match {
       case Imm(v) => v
-      case Reg(reg) => this.registers(reg)
+      case Reg(reg) => this.registers.getOrElse(reg, throw new RuntimeException("The interpreter to read register " + reg + " that had no value."))
       case Deref(reg, offset) =>
-        val addr = this.registers(reg) + offset
+        val addr = this.registers.getOrElse(reg, throw new RuntimeException("The interpreter to read register " + reg + " that had no value.")) + offset
         assert(addr % 8 == 0, "Offset reads not supported")
         if (strict) assert(addr >= registers(RSP()), "Write outside of stack")
         this.memory(addr)
-      case XVar(name) => this.variables(name)
+      case XVar(name) => this.variables.getOrElse(name, throw new RuntimeException("The interpreter to read variable " + name + " that had no value."))
       case ByteRegister(reg) => reg match {
         case AL() => this.registers(RAX()).toByte
         case BL() => this.registers(RBX()).toByte
@@ -158,7 +157,7 @@ object X86Interpreter {
       case Imm(_) => assert(false, "Write to immediate value")
       case Reg(reg) => this.registers(reg) = w
       case Deref(reg, offset) =>
-        val addr = this.registers(reg) + offset
+        val addr = this.registers.getOrElse(reg, throw new RuntimeException("The interpreter to read register " + reg + " that had no value.")) + offset
         assert(addr % 8 == 0, "Offset reads not supported")
         if (strict) assert(addr >= registers(RSP()), "Write outside of stack")
         this.memory(addr) = w
